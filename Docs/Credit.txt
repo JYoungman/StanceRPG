@@ -1,0 +1,8 @@
+This demo was designed and built by James Youngman
+
+Stance shield sprite, controller icons, selection icon, and next stance indicator arrow are from the Kenny Game Assets All-In-1: 
+https://kenney.itch.io/kenney-game-assets
+
+Character sprites are from Beowulf's RPG Boss Monsters & Minions Pack: https://beowulf.itch.io/rpg-boss-monsters-minions-huge-pack
+
+All other assets by James Youngman

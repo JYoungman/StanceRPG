@@ -1,0 +1,47 @@
+------------------------
+      Design Goals
+------------------------
+
+The creation of this battle system arose out of a question: How could one produce a turn-based battle system where it was not expected that players would take damage through the course of a battle? Additionally, there were two secondary design goals: encourage the use of consumable items, and discourage mashing through battles.
+
+To achieve this goal, I designed a system in which each ability has a "stance." Using an ability causes the unit which uses it to take on this stance. Units cannot be harmed by abilities that match the stance they are presently in. Each ability has exactly one stance associated with it; each unit must be in exactly one stance on any given turn. In addition to making the stance of all units available at all times, and the stance of each ability available when selecting an action. Additionally, the stance each enemy will be entering with their next attack is displayed in the UI, so the player can plan to avoid damage. To allow further precision in tactical planning, there is a timeline showing the turn order for the remainder of the round.
+
+A consequence of this is that enemy units decide on what their next attack will be immediately after taking their last attack, rather than just before they take it. Further iteration might allow a change to this, by providing enemies with a larger suite of abilities.
+
+Critical hits, rather than occuring randomly, happen on a per-unit period. Only player units can crit. The UI reflects both whether or not the current turn is a critical turn, and how many turns remain until the next critical turn. This is similar to the system used in Zeboyd games RPGs. Versus a random critical chance, this system advances the secondary goal of discouraging mashing, by encouraging deliberate planning to maximize damage output on critical turns.
+
+In further service of this goal, as well as the goal of encouraging item use, there are no healing abilities, however there are healing items. Items do not have a stance; any unit can use an item on any allied unit regardless of, and without changing, the stance of either. There are no offensive items, as this would allow stance-agnostic attacks. Buff and debuff abilities are present, however, as these work toward the anti-mashing goal, especially in the context of the critical hit system.
+
+Finally, in lieu of MP, this combat system is based on stamina. Units gain stamina each turn, and spend it on abilities. All abilities have a non-zero stamina cost. Units can overspend their stamina budget, but if they have less than zero stamina they cannot use an ability and take enhanced damage. The use of stamina instead of MP is due to the stance system and the anti-mashing goal. Since all attacks have a stamina cost, stamina management is a consideration with each turn. Given this, using MP would introduce a need for periodic MP recovery item usage, which, in the context of a dungeon, would put undue emphasis on maintaining item inventory, which would encourage item hoarding, which is contrary to the item usage goal, despite the first order increase in item use.
+
+------------------------
+   Design Conclusions
+------------------------
+
+At the start of the project, I had a primary design goal, and two secondary design goals: Producing a turn-based battle system where it was not expected that player would take damage in a battle, and that encouraged the use of consumable items, and discouraged mashing through battles. I believe that the stance system as it currently exists partially succeeds at the primary goal, fully succeeds at the anti-mashing goal, and, in proper context, can succeed at the pro-item usage goal.
+
+By paying attention to the stances enemies will be using on their next turn, as well as the order in which units will take their turns, the player can can limit the damage that they receive, by staying in stances that enemies will attack in, and thus be functionally invincible. However, this is not absolute: player units in the current design can only use two stances, and enemies are not compelled to use the same stance as their allies. Because of this, to allow the ability to avoid all damage, all player units would have to have access to the stances used by the enemies, and either all enemies would have to syncronize their stance choice each round or for enemies to be restricted to only one unit utilizing an offensive ability per round.
+
+Between the absence of a default attack as found in most turn-based RPGs, and the stance system providing enemy units with partial invincibility, mashing is an ineffective strategy. Additionally, the critical hit system, stamina system, and presence of buff and debuff abilities encourage a deliberate style of play, both to minimize incoming damage, and to maximize dealt damage.
+
+The consumable item usage question is one that can't be fully answered by a combat-only demo such as this one. There are other important factors, such as the ease or difficulty of acquiring such items, and the availability of non-item based healing options within dungeons. That said, I believe a game that utilized this combat system (or a similar one) and maintained the prohibition on healing abilities would be well-positioned to create dungeons in which players would use consumable items. Specifically, dungeons which the player cannot freely leave and re-enter, and which lack other options for healing, would work well to achieve this goal. Additionally, dungeons with variable progression, gated by outside systems (such as in the modern Persona games) would work well for this, by creating a context in which the player's ability to reach checkpoints in a given run is a function of their ability to preserve party health.
+
+Regardless of whether one has the goal of encouraging consumable item use or not, I would recommend maintaining the prohibition on healing abilities in any game utilizing a stance system. Limiting healing options increases the strategic pressure on players to be deliberate in choosing which stances to utilize each turn. Additionally, a discrete defend option should be omitted, as any such action is made redundant by the stance system.
+
+In the process of working on this demo, I've come to the conclusion that enemies in this system need to be powerful relative to player units. They need to do a high amount of damage (versus enemies in other turn based RPG systems) in order to emphasize the need for managing your stances, and they need a large health pool for there to be room for players to perceive and feel the difference in damage output from naive versus more thoughtful strategies. It must take multiple rounds to kill an enemy unit with a naive strategy so players can feel smart and rewarded for making smarter choices by killing enemies in fewer rounds.
+
+This system needs at least three stances in order to work, as with only two stances, the dynamics of being able to select stances that allow dealing damage but not taking damage break down. While it's likely possible to have more than three stances in a game, experimentation would be needed to determine if the combat system works with more than three stances in an individual battle (and thus, dungeon).
+
+The need for enemies to broadcast their next stance imposes constraints on when and how enemies can choose abilities, as indicated above. To reiterate, AI units must choose the stance of their next ability at the end of their turn. In the current implementation, this is achieved by selecting the next ability to be used at this phase, but this is not a strict requirement of the system. Selecting which unit to target can be performed either at the start or the end of the enemy's turn under the system. I recommend doing this at the start of the turn, in order to avoid the case of attempting to target a unit that is no longer eligible to be targeted by the selected ability.
+
+------------------------
+          Coda
+------------------------
+
+I'm glad I undertook this project. It was fun and interesting to design a new way of handling turn based combat, and discovering the properties and design space of this new system. While I'm sad that I wasn't able to more fully develop it myself, it is my hope that by open sourcing this project, and sharing my design notes, others will be inspired to build games using stance systems themselves, further exploring this design space and sharing those learnings with the community.
+
+Good luck! I look forward to playing your games!
+
+James Youngman
+9/23/2023
+
